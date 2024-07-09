@@ -111,7 +111,7 @@ function getCookie(name) {
                 <div class="page-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3 class="page-title">Danh sách mượn</h3>
+                            <h3 class="page-title">Danh sách mượn 2</h3>
                         </div>
                     </div>
                 </div>

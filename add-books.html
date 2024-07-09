@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html >
+    <script>
+        if (getCookie("basic") === "true") {
+            // alert("Đăng nhập với vai trò nhân viên")
+        } else {
+            window.location.href = "login.html";
+        }
+        
+        // Hàm lấy giá trị của cookie
+        function getCookie(name) {
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length === 2) return parts.pop().split(";").shift();
+        }
+    </script>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+        <title>UTT - Thêm sách</title>
+
+        <link rel="shortcut icon" href="assets/img/favicon.png">
+
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&amp;display=swap"
+            rel="stylesheet">
+
+        <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="assets/plugins/feather/feather.css">
+
+        <link rel="stylesheet" href="assets/plugins/icons/flags/flags.css">
+
+        <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+        <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+
+        <link rel="stylesheet" href="assets/plugins/select2/css/select2.min.css">
+
+        <link rel="stylesheet" href="assets/css/style.css">
+    </head>
+
+    <body>
+
+        <div class="main-wrapper">
+            <!-- Nội dung Header -->   
+            <div id="header"></div>
+            <script>
+                // Fetch nội dung header
+                fetch('header.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('header').innerHTML = data;
+
+                        document.getElementById("name").textContent = decodeURIComponent(getCookie("user_name"));
+                        document.getElementById("role").textContent = decodeURIComponent(getCookie("role"));   
+                    });
+            </script>
+
+            <!-- Nội dung Sidebar -->   
+            <div id="sidebar"></div>
+            <script>
+                // Fetch nội dung Sidebar
+                fetch('sidebar.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('sidebar').innerHTML = data;
+                        
+                        // Thêm lớp 'active' cho phần tử có class 'sv'
+                        const svElement = document.querySelector('.tv');
+                        if (svElement) {
+                            svElement.classList.add('active');
+                        }
+                    });
+            </script>
+
+            <div class="page-wrapper author" style="display:none">
+                <div class="content container-fluid">
+                    <div class="page-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="page-title">Thêm mới tác giả</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form action="backend/add.php?add=author_mgr" method="post">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h5 class="form-title"><span>Thông tin tác giả</span></h5>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Tên tác giả <span class="login-danger">*</span></label>
+                                                    <input type="text" class="form-control" name="author_name">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Phong cách <span class="login-danger">*</span></label>
+                                                    <input type="text" class="form-control" name="style">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Tóm tắt <span class="login-danger">*</span></label>
+                                                    <input type="text" class="form-control" name="des">
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="student-submit">
+                                                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-wrapper publisher" style="display:none">
+                <div class="content container-fluid">
+                    <div class="page-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="page-title">Thêm mới nhà xuất bản</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form action="backend/add.php?add=publisher_mgr" method="post">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h5 class="form-title"><span>Thông tin nhà xuất bản</span></h5>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Tên nhà xuất bản <span class="login-danger">*</span></label>
+                                                    <input type="text" class="form-control" name="publisher_name">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Số điện thoại <span class="login-danger">*</span></label>
+                                                    <input type="text" class="form-control" name="phone">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Địa chỉ <span class="login-danger">*</span></label>
+                                                    <input type="text" class="form-control" name="ad">
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="student-submit">
+                                                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-wrapper books" style="display:none">
+                <div class="content container-fluid">
+                    <div class="page-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="page-title">Thêm mới sách</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form action="backend/add.php?add=library" method="post">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h5 class="form-title"><span>Thông tin sách</span></h5>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Mã sách <span class="login-danger">*</span></label>
+                                                    <input type="text" class="form-control" name="book_id" id="book_id" value="" readonly>
+                                                </div>
+                                            </div>
+                                            <script>
+                                                // Sử dụng fetch để gọi API PHP
+                                                fetch('backend/func.php?func=auto_id&auto_id=book_id')
+                                                    .then(response => response.text()) // Chuyển đổi dữ liệu trả về thành văn bản
+                                                    .then(data => {
+                                                        // Xử lý dữ liệu được trả về
+                                                        document.getElementById('book_id').value = `${data}`;
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('Lỗi:', error);
+                                                    });
+                                            </script>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Tên sách <span class="login-danger">*</span></label>
+                                                    <input type="text" class="form-control" name="book_name">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Tác giả <span class="login-danger">*</span></label>
+                                                    <select class="form-control select" name="author" id="author">
+                                                                
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Nhà xuất bản <span class="login-danger">*</span></label>
+                                                    <select class="form-control select" name="publisher" id="publisher">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Danh mục</label>
+                                                    <select class="form-control select" name="category">
+                                                        <option>Lựa chọn danh mục</option>
+                                                        <option>Triết học lý luận</option>
+                                                        <option>Khoa học kỹ thuật</option>
+                                                        <option>Quản trị kinh doanh</option>
+                                                        <option>Tâm lý Kỹ năng</option>
+                                                        <option>Công nghệ thông tin</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Loại sách <span class="login-danger">*</span></label>
+                                                    <select class="form-control select" name="book_type">
+                                                        <option>Lựa chọn loại sách</option>
+                                                        <option>Sách bộ</option>
+                                                        <option>Sách lẻ</option>
+                                                        <option>Giáo trình</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Số lượng <span class="login-danger">*</span></label>
+                                                    <input type="number" class="form-control" name="quantity" min="1">
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="student-submit">
+                                                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hiển thị nội dung theo trạng thái trang web (thêm sách/ tác giả/ nhà xuất bản)-->
+        <script>
+            // Lấy tham số truyền qua URL
+            const urlParams = new URLSearchParams(window.location.search);
+            // Lấy giá trị của biến GET 
+            const status = urlParams.get('status');
+            if (status == "author") document.querySelector('.page-wrapper.author').style.display = 'block';
+            else if (status == 'publisher') document.querySelector('.page-wrapper.publisher').style.display = 'block';
+            else document.querySelector('.page-wrapper.books').style.display = 'block';
+        </script>
+
+        <!-- Thêm nội dung từ CSDL (Nhà xuất bản và Tác giả)-->
+        <script>
+            fetch('backend/get_data.php?get_data=tables&table=library')
+                .then(response => response.json())
+                .then(data => {
+                    var author = document.querySelector("#author");
+                    var publisher = document.querySelector("#publisher");
+
+                    data.forEach(item => {
+                    var authorOption = document.createElement("option");
+                    authorOption.textContent = item.author;
+                    author.appendChild(authorOption);
+
+                    var publisherOption = document.createElement("option");
+                    publisherOption.textContent = item.publisher;
+                    publisher.appendChild(publisherOption);
+                    });
+                })
+                .catch(error => {
+                    console.error('Lỗi khi truy xuất dữ liệu:', error);
+                });
+        </script>
+
+        <script src="assets/js/jquery-3.6.0.min.js"></script>
+
+        <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <script src="assets/js/feather.min.js"></script>
+
+        <script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+        <script src="assets/plugins/select2/js/select2.min.js"></script>
+
+        <script src="assets/js/script.js"></script>
+    </body>
+
+
+</html>

@@ -1,0 +1,238 @@
+<script>
+
+    if (getCookie("basic") === "true") {
+        // alert("Đăng nhập với vai trò nhân viên")
+    } else {
+        window.location.href = "login.html";
+    }
+    
+    // Hàm lấy giá trị của cookie
+    function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length === 2) return parts.pop().split(";").shift();
+    }
+</script>
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>UTT - Danh sách sinh viên</title>
+    <link rel="shortcut icon" href="assets/img/favicon.png">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&amp;display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="assets/plugins/feather/feather.css">
+
+    <link rel="stylesheet" href="assets/plugins/icons/flags/flags.css">
+
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+
+    <link rel="stylesheet" href="assets/plugins/datatables/datatables.min.css">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+
+        <!-- Nội dung Header -->   
+        <div id="header"></div>
+        <script>
+            // Fetch nội dung header
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header').innerHTML = data;
+
+                    document.getElementById("name").textContent = decodeURIComponent(getCookie("user_name"));
+                    document.getElementById("role").textContent = decodeURIComponent(getCookie("role"));   
+                });
+        </script>
+
+        <!-- Nội dung Sidebar -->   
+        <div id="sidebar"></div>
+        <script>
+            // Fetch nội dung Sidebar
+            fetch('sidebar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('sidebar').innerHTML = data;
+                    
+                    // Thêm lớp 'active' cho phần tử có class 'sv'
+                    const svElement = document.querySelector('.sv');
+                    if (svElement) {
+                        svElement.classList.add('active');
+                    }
+                });
+        </script>
+
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="page-sub-header">
+                                <h3 class="page-title">Danh sách sinh viên</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form action="students.html" method="GET">
+                    <div class="student-group-form">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Lọc theo mã sinh viên ..." name="student_id">
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Lọc theo tên ..." name="student_name">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Lọc theo số điện thoại ..." name="phone">
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="search-student-btn">
+                                    <button type="submit" class="btn btn-primary">Lọc</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card card-table comman-shadow">
+                            <div class="card-body">
+
+                                <div class="page-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h3 class="page-title">Sinh viên</h3>
+                                        </div>
+                                        <div class="col-auto text-end float-end ms-auto download-grp">
+                                            <a href="add-student.html" class="btn btn-primary"><i
+                                                    class="fas fa-plus"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table
+                                        class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                                        <thead class="student-thread">
+                                            <tr>
+                                                <th>Mã sinh viên</th>
+                                                <th>Tên</th>
+                                                <th>Lớp</th>
+                                                <th>Số điện thoại</th>
+                                                <th class="text-end">Thao tác</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="table">
+                                            <tr id="table_data">
+                                                <td id="student_id"></td>
+                                                <td>
+                                                    <h2 id="student_name"></h2>
+                                                </td>
+                                                <td id ="student_class"></td>
+                                                <td id="phone"></td>
+                                                <td class="text-end">
+                                                    <div class="actions ">
+                                                        <a href="" class="btn btn-sm bg-danger-light" id="edit_act">
+                                                            <i class="feather-edit"></i>
+                                                        </a>
+                                                        <a href="" class="btn btn-sm bg-danger-light" id="del_act">
+                                                            <i class="far fa-trash-alt me-2"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                // Lấy tham số truyền qua URL
+                const urlParams = new URLSearchParams(window.location.search);
+                // Lấy giá trị của biến GET 
+                const student_id = urlParams.get('student_id');
+                const student_name = urlParams.get('student_name');
+                const phone = urlParams.get('phone');
+                if (student_id || student_name || phone) url = `backend/get_data.php?get_data=table_students&student_id=${student_id}&student_name=${student_name}&phone=${phone}`
+                else url = `backend/get_data.php?get_data=table_students`
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        var table = document.getElementById('table')
+                        var table_data = document.getElementById('table_data').cloneNode(true)
+                        document.getElementById('table_data').remove()
+
+                        data.forEach(item => {
+                            const clonedDiv = table_data.cloneNode(true);
+                            clonedDiv.querySelector("#student_id").textContent = item.student_id
+                            clonedDiv.querySelector("#student_name").textContent = item.student_name
+                            clonedDiv.querySelector("#student_class").textContent = item.student_class
+                            clonedDiv.querySelector("#phone").textContent = item.phone
+                            clonedDiv.querySelector("#edit_act").href = `edit-student.html?student_id=${item.student_id}`
+                            clonedDiv.querySelector("#del_act").href = `backend/delete.php?delete=students&student_id=${item.student_id}`
+                            table.appendChild(clonedDiv);
+                        });
+                    })
+                    .catch(error => {
+                        
+                        console.error('Lỗi khi truy xuất dữ liệu:', error);
+                    });
+            </script>
+            <!-- Nội dung footer -->   
+            <div id="footer"></div>
+            <script>
+                // Fetch nội dung footer
+                fetch('footer.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('footer').innerHTML = data;
+                    });
+            </script>
+
+        </div>
+
+    </div>
+
+
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+
+    <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/js/feather.min.js"></script>
+
+    <script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <script src="assets/plugins/datatables/datatables.min.js"></script>
+
+    <script src="assets/js/script.js"></script>
+</body>
+
+
+</html>

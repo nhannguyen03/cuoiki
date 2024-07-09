@@ -1,0 +1,75 @@
+<head>
+    <link rel="shortcut icon" href="assets/img/favicon.png">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&amp;display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="assets/plugins/feather/feather.css">
+
+    <link rel="stylesheet" href="assets/plugins/icons/flags/flags.css">
+
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+
+    <link rel="stylesheet" href="assets/plugins/datatables/datatables.min.css">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<div class="header">
+
+    <div class="header-left">
+        <a href="index.html" class="logo">
+            <img src="assets/img/logo.png" alt="Logo">
+        </a>
+        <a href="index.html" class="logo logo-small">
+            <img src="assets/img/logo-small.png" alt="Logo" width="30" height="30">
+        </a>
+    </div>
+
+    <div class="menu-toggle">
+        <a href="javascript:void(0);" id="toggle_btn">
+            <i class="fas fa-bars"></i>
+        </a>
+    </div>
+
+    <a class="mobile_btn" id="mobile_btn">
+        <i class="fas fa-bars"></i>
+    </a>
+
+    <ul class="nav user-menu">
+        <li class="nav-item dropdown has-arrow new-user-menus">
+            <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                <span class="user-img">
+                    <img class="rounded-circle" src="assets/img/img-05.jpg" width="31"
+                        alt="Ryan Taylor">
+                    <div class="user-text">
+                        <h6 id="name"></h6>
+                        <p class="text-muted mb-0" id="role"></p>
+                    </div>
+                </span>
+            </a>
+            <div class="dropdown-menu">
+
+                <a class="dropdown-item" href="backend/diecookie.php">Logout</a>
+            </div>
+        </li>
+
+    </ul>
+
+</div>
+
+<script>
+    // Hàm lấy giá trị của cookie
+    function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length === 2) return parts.pop().split(";").shift();
+    }
+
+    document.getElementById("name").textContent = decodeURIComponent(getCookie("user_name"));
+    document.getElementById("role").textContent = decodeURIComponent(getCookie("role"));   
+</script>

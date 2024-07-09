@@ -1,0 +1,212 @@
+<script>
+
+if (getCookie("basic") === "true") {
+    // alert("Đăng nhập với vai trò nhân viên")
+} else {
+    window.location.href = "login.html";
+}
+
+// Hàm lấy giá trị của cookie
+function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length === 2) return parts.pop().split(";").shift();
+}
+</script>
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>UTT - Sửa sách</title>
+
+    <link rel="shortcut icon" href="assets/img/favicon.png">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&amp;display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="assets/plugins/feather/feather.css">
+
+    <link rel="stylesheet" href="assets/plugins/icons/flags/flags.css">
+
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+
+    <link rel="stylesheet" href="assets/plugins/select2/css/select2.min.css">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+
+        <!-- Nội dung Header -->   
+        <div id="header"></div>
+        <script>
+            // Fetch nội dung header
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header').innerHTML = data;
+
+                    document.getElementById("name").textContent = decodeURIComponent(getCookie("user_name"));
+                    document.getElementById("role").textContent = decodeURIComponent(getCookie("role"));   
+                });
+        </script>
+
+        <!-- Nội dung Sidebar -->   
+        <div id="sidebar"></div>
+        <script>
+            // Fetch nội dung Sidebar
+            fetch('sidebar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('sidebar').innerHTML = data;
+                    
+                    // Thêm lớp 'active' cho phần tử có class 'sv'
+                    const svElement = document.querySelector('.tv');
+                    if (svElement) {
+                        svElement.classList.add('active');
+                    }
+                });
+        </script>
+
+
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">Sửa thông tin sách</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <form action="" method="POST" id="form_data">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h5 class="form-title"><span>Thông tin sách</span></h5>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+                                            <div class="form-group local-forms">
+                                                <label>Mã sách <span class="login-danger">*</span></label>
+                                                <input type="text" class="form-control" value="" name="book_id" id="book_id">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+                                            <div class="form-group local-forms">
+                                                <label>Tên sách <span class="login-danger">*</span></label>
+                                                <input type="text" class="form-control" value="" name="book_name" id="book_name" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+                                            <div class="form-group local-forms">
+                                                <label>Tác giả <span class="login-danger">*</span></label>
+                                                <input type="text" class="form-control" value="" name="author" id="author" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+                                            <div class="form-group local-forms">
+                                                <label>Nhà xuất bản <span class="login-danger">*</span></label>
+                                                <input type="text" class="form-control" value="" name="publisher" id="publisher" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+                                            <div class="form-group local-forms">
+                                                <label>Danh mục <span class="login-danger">*</span></label>
+                                                <select class="form-control select" name="category">
+                                                    <option>Công nghệ thông tin</option>
+                                                    <option>Khoa học công nghệ</option>
+                                                    <option>Tài chính doanh nghiệp</option>
+                                                    <option>Đời sống xã hội</option>
+                                                    <option>Sức khỏe và đời sống</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+                                            <div class="form-group local-forms">
+                                                <label>Loại sách <span class="login-danger">*</span></label>
+                                                <select class="form-control select" name="book_type">
+                                                    <option>Sách bộ</option>
+                                                    <option>Sách lẻ</option>
+                                                    <option>Giáo trình</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+                                            <div class="form-group local-forms">
+                                                <label>Số lượng <span class="login-danger">*</span></label>
+                                                <input type="number" class="form-control" min="1" value="" name="quantity" id="quantity">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="student-submit">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            <script>
+                                // Lấy tham số truyền qua URL
+                                const urlParams = new URLSearchParams(window.location.search);
+                                // Lấy giá trị của biến GET 
+                                const book_id = urlParams.get('book_id');
+                                
+                                fetch('backend/get_data.php?get_data=tables&table=library')
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        for (let i = 0; i < data.length; i++) {
+                                            if (data[i].book_id == book_id) {
+                                                document.querySelector("#book_id").value = data[i].book_id
+                                                document.querySelector("#book_name").value = data[i].book_name
+                                                document.querySelector("#author").value = data[i].author
+                                                document.querySelector("#publisher").value = data[i].publisher
+                                                document.querySelector("#quantity").value = data[i].quantity
+                                                document.querySelector("#form_data").action = `backend/edit.php?edit=library&book_id_old=${data[i].book_id}`
+                                                break;
+                                            }
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Lỗi khi truy xuất dữ liệu:', error);
+                                    });
+                            </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+
+    <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/js/feather.min.js"></script>
+
+    <script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <script src="assets/plugins/select2/js/select2.min.js"></script>
+
+    <script src="assets/js/script.js"></script>
+</body>
+
+<!-- Mirrored from preschool.dreamguystech.com/template/edit-books.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 24 Sep 2023 09:19:24 GMT -->
+
+</html>
